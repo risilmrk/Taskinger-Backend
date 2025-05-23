@@ -9,7 +9,9 @@ router
 router
     .route('/:id')
     .delete(taskController.deleteTask)
-
+    .patch(taskController.updateTask)
+    .get(taskController.getTask)
+    
 router
     .route('/ind')
     .get(taskController.getIndTasks)

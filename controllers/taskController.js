@@ -20,17 +20,32 @@ exports.getAllTasks = async (req, res) => {
   }
 };
 
+exports.getTask = (req, res) => {
+  try {
+    const task = Task.findById(req.params.id);
+
+    res.status(200).json({
+      status:'success',
+      task
+    })
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
 exports.getIndTasks = async (req, res) => {
   try {
-
-    const indTasks = await Task.find({ type: "Independent" });
+    const indTasks = await Task.find({ type: 'Independent' });
 
     res.status(200).json({
       status: 'success',
       results: indTasks.length,
       data: {
-        tasks: indTasks
-      }
+        tasks: indTasks,
+      },
     });
   } catch (err) {
     res.status(400).json({
@@ -87,10 +102,24 @@ exports.addTask = async (req, res) => {
   }
 };
 
+exports.updateTask = async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-exports.updateTask = (req,res)=>{
-  
-}
+    res.status(201).json({
+      status: 'success',
+      task,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
 
 exports.deleteTask = async (req, res) => {
   try {
