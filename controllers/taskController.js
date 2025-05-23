@@ -1,5 +1,5 @@
 const Task = require('../models/taskModel');
-const Project = require('../models/projectModel')
+const Project = require('../models/projectModel');
 
 exports.getAllTasks = async (req, res) => {
   try {
@@ -20,6 +20,26 @@ exports.getAllTasks = async (req, res) => {
   }
 };
 
+exports.getIndTasks = async (req, res) => {
+  try {
+
+    const indTasks = await Task.find({ type: "Independent" });
+
+    res.status(200).json({
+      status: 'success',
+      results: indTasks.length,
+      data: {
+        tasks: indTasks
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
 exports.addTask = async (req, res) => {
   try {
     const { title, description, projectId } = req.body;
@@ -29,7 +49,9 @@ exports.addTask = async (req, res) => {
     if (projectId) {
       project = await Project.findById(projectId);
       if (!project) {
-        return res.status(404).json({ status: 'fail', message: 'Project not found.' });
+        return res
+          .status(404)
+          .json({ status: 'fail', message: 'Project not found.' });
       }
     }
 
@@ -65,19 +87,18 @@ exports.addTask = async (req, res) => {
   }
 };
 
-
-const deleteTask = async (req,res)=>{
-   try {
+exports.deleteTask = async (req, res) => {
+  try {
     await Task.findByIdAndDelete(req.params.id);
 
     res.status(204).json({
       status: 'success',
-      data: null
+      data: null,
     });
   } catch (err) {
     res.status(404).json({
       status: 'fail',
-      message: err
+      message: err,
     });
   }
-}
+};

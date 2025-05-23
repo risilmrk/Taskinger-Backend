@@ -7,9 +7,7 @@ exports.getAllProjects = async (req, res) => {
   res.status(200).json({
     status: 'success',
     results: projects.length,
-    projects: {
-      projects,
-    },
+    projects
   });
 };
 exports.addProject = async (req, res) => {
