@@ -39,6 +39,19 @@ const taskSchema = new mongoose.Schema({
   },
 });
 
+
+
+taskSchema.pre('remove', async function(next) {
+  if (this.project) {
+    await Project.updateOne(
+      { _id: this.project },
+      { $pull: { tasks: this._id } }
+    );
+  }
+  next();
+});
+
+
 const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task;
