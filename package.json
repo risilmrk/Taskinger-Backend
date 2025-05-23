@@ -4,18 +4,22 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-  "start": "node index.js",
-  "build": "echo 'No build step required'"
+    "start": "node index.js",
+    "build": "echo 'No build step required'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "mongoose": "^8.15.0",
+    "mongoose": "7.6.0",
+    "mongodb": "4.10.0",
     "morgan": "^1.10.0"
   }
 }
