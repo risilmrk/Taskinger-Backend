@@ -20,14 +20,21 @@ exports.getAllTasks = async (req, res) => {
   }
 };
 
-exports.getTask = (req, res) => {
+exports.getTask = async (req, res) => {
   try {
-    const task = Task.findById(req.params.id);
+    const task = await Task.findById(req.params.id);
+    //verify
+    if (!task) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Task not found',
+      });
+    }
 
     res.status(200).json({
-      status:'success',
-      task
-    })
+      status: 'success',
+      task,
+    });
   } catch (err) {
     res.status(400).json({
       status: 'fail',
@@ -59,7 +66,7 @@ exports.addTask = async (req, res) => {
   try {
     const { title, description, projectId } = req.body;
 
-    // Find the related project if projectId is given
+    // Find the project if projectId is given
     let project = null;
     if (projectId) {
       project = await Project.findById(projectId);
@@ -70,7 +77,7 @@ exports.addTask = async (req, res) => {
       }
     }
 
-    // Set type based on presence of project
+    // Set type based on project
     const type = project ? 'Project' : 'Independent';
 
     // Create and save task
@@ -78,11 +85,11 @@ exports.addTask = async (req, res) => {
       title,
       description,
       type,
-      fromProject: project ? project.title : null, // set fromProject if needed
+      fromProject: project ? project.title : null,
       project: project ? project._id : null,
     });
 
-    // Optionally, add the task to the project's tasks array
+    // add the task to the project's tasks array
     if (project) {
       project.tasks.push(newTask._id);
       await project.save();
