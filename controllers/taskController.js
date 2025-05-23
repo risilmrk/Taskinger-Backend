@@ -19,13 +19,26 @@ exports.getAllTasks = async (req, res) => {
   }
 };
 
-exports.addTask = async(req,res)=>{
-     const newTask = await Task.create(req.body);
+exports.addTask = async (req, res) => {
+  try {
+    const type = project ? 'Project' : 'Independent';
 
+    const newTask = new Task({
+      title,
+      description,
+      type,
+      project: project ? project._id : null,
+    });
     res.status(201).json({
       status: 'success',
       data: {
-        newTask
-      }
-    })
-}
+        newTask,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Invalid input data.',
+    });
+  }
+};

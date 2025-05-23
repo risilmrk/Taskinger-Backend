@@ -1,7 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors')
-const taskRouter = require('./routes/taskRouter')
+const taskRouter = require('./Routes/taskRouter')
+const projectRouter = require('./routes/projectRouter')
 
 
 
@@ -16,5 +17,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api/v1/tasks', taskRouter);
+app.use('/api/v1/projects', projectRouter);
 
 module.exports = app
