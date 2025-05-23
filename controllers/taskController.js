@@ -128,6 +128,78 @@ exports.updateTask = async (req, res) => {
   }
 };
 
+exports.toggleStarted = async (req,res)=>{
+  try {
+    const task = await Task.findById(req.params.id);
+    if(!task){
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Task not found',
+      });
+    }
+
+    task.started = !task.started
+
+    res.status(200).json({
+      status:'succcess',
+      task
+    })
+
+   
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+}
+
+
+exports.toggleFinished = async (req,res)=>{
+  try {
+    const task = await Task.findById(req.params.id);
+    if(!task){
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Task not found',
+      });
+    }
+
+    task.finished = !task.finished
+
+    res.status(200).json({
+      status:'succcess',
+      task
+    })
+
+   
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+}
+
+exports.getAllPending = async (req, res) => {
+  try {
+    const tasks = await Task.find({ finished: false, started: true });
+
+    res.status(200).json({
+      status: 'success',
+      results: tasks.length,
+      data: {
+        tasks,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
 exports.deleteTask = async (req, res) => {
   try {
     await Task.findByIdAndDelete(req.params.id);
