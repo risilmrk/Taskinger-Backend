@@ -87,6 +87,11 @@ exports.addTask = async (req, res) => {
   }
 };
 
+
+exports.updateTask = (req,res)=>{
+  
+}
+
 exports.deleteTask = async (req, res) => {
   try {
     await Task.findByIdAndDelete(req.params.id);
