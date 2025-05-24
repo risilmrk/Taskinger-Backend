@@ -49,24 +49,7 @@ exports.getTask = async (req, res) => {
   }
 };
 
-exports.getIndTasks = async (req, res) => {
-  try {
-    const indTasks = await Task.find({ type: 'Independent' });
 
-    res.status(200).json({
-      status: 'success',
-      results: indTasks.length,
-      data: {
-        tasks: indTasks,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
 
 exports.addTask = async (req, res) => {
   try {
@@ -192,24 +175,6 @@ exports.toggleFinished = async (req,res)=>{
   }
 }
 
-exports.getAllPending = async (req, res) => {
-  try {
-    const tasks = await Task.find({ status:'pending' });
-
-    res.status(200).json({
-      status: 'success',
-      results: tasks.length,
-      data: {
-        tasks,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
 
 exports.deleteTask = async (req, res) => {
   try {
