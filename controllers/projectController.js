@@ -2,20 +2,52 @@ const Project = require('../models/projectModel');
 const Task = require('../models/taskModel');
 
 exports.getAllProjects = async (req, res) => {
-  const projects = await Project.find();
+  try {
+    const projects = await Project.find();
 
-  res.status(200).json({
-    status: 'success',
-    results: projects.length,
-    projects
-  });
+    res.status(200).json({
+      status: 'success',
+      results: projects.length,
+      projects
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: err.message
+    });
+  }
 };
+
 exports.addProject = async (req, res) => {
-    // You are creating a Task instead of a Project. Should be Project.create
+  try {
     const newProject = await Project.create(req.body);
 
     res.status(200).json({
-        status: 'success',
-        newProject
+      status: 'success',
+      newProject
     });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: err.message
+    });
+  }
+};
+
+exports.upateProject = async (req, res) => {
+  try {
+    const project = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      runValidators: true,
+      new: true
+    });
+    res.status(200).json({
+      status: 'success',
+      project
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: err.message
+    });
+  }
 };

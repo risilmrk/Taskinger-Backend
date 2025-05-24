@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const taskController = require('../controllers/projectController');
+const projectController = require('../controllers/projectController');
 
 router
   .route('/')
-  .get(taskController.getAllProjects)
-  .post(taskController.addProject);
+  .get(projectController.getAllProjects)
+  .post(projectController.addProject);
 
+router
+  .route('/:id')
+  .patch(projectController.upateProject)
 module.exports = router;
