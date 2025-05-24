@@ -15,15 +15,15 @@ const taskSchema = new mongoose.Schema({
     type: String,
     maxlength: [40, 'A description must have less or equal than 40 characters'],
   },
-   type: {
+  type: {
     type: String,
     enum: ['Independent', 'Project'],
-    default: 'Independent'
+    default: 'Independent',
   },
   project: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Project',
-    default: null
+    default: null,
   },
   started: {
     type: Boolean,
@@ -33,15 +33,18 @@ const taskSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  status: {
+    type: String,
+    enum: ['pending', 'not started', 'completed'],
+    default: 'pending',
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-
-
-taskSchema.pre('remove', async function(next) {
+taskSchema.pre('remove', async function (next) {
   if (this.project) {
     await Project.updateOne(
       { _id: this.project },
@@ -50,6 +53,18 @@ taskSchema.pre('remove', async function(next) {
   }
   next();
 });
+
+taskSchema.pre('save', function (next) {
+  if (!this.finished && this.started) {
+    this.status = 'pending';
+  } else if (!this.finished && !this.started) {
+    this.status = 'not started';
+  } else if(this.finished) {
+    this.status = 'completed';
+  }
+  next();
+});
+
 
 
 const Task = mongoose.model('Task', taskSchema);

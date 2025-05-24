@@ -134,31 +134,35 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-exports.toggleStarted = async (req,res)=>{
+exports.toggleStarted = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
-    if(!task){
+
+    if (!task) {
       return res.status(404).json({
         status: 'fail',
         message: 'Task not found',
       });
     }
 
-    task.started = !task.started
+    task.started = !task.started;
+
+    // Save the task to apply changes and trigger pre-save hook
+    await task.save();
 
     res.status(200).json({
-      status:'succcess',
-      task
-    })
+      status: 'success',
+      task,
+    });
 
-   
   } catch (err) {
-    res.status(404).json({
+    res.status(500).json({
       status: 'fail',
-      message: err,
+      message: err.message,
     });
   }
-}
+};
+
 
 
 exports.toggleFinished = async (req,res)=>{
@@ -173,6 +177,7 @@ exports.toggleFinished = async (req,res)=>{
 
     task.finished = !task.finished
 
+        await task.save();
     res.status(200).json({
       status:'succcess',
       task
