@@ -8,12 +8,12 @@ exports.getAllProjects = async (req, res) => {
     res.status(200).json({
       status: 'success',
       results: projects.length,
-      projects
+      projects,
     });
   } catch (err) {
     res.status(500).json({
       status: 'error',
-      message: err.message
+      message: err.message,
     });
   }
 };
@@ -22,32 +22,32 @@ exports.addProject = async (req, res) => {
   try {
     const newProject = await Project.create(req.body);
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
-      newProject
+      newProject,
     });
   } catch (err) {
     res.status(500).json({
       status: 'error',
-      message: err.message
+      message: err.message,
     });
   }
 };
 
-exports.upateProject = async (req, res) => {
+exports.updateProject = async (req, res) => {
   try {
-    const project = await Task.findByIdAndUpdate(req.params.id, req.body, {
+    const project = await Project.findByIdAndUpdate(req.params.id, req.body, {
       runValidators: true,
-      new: true
+      new: true,
     });
     res.status(200).json({
       status: 'success',
-      project
+      project,
     });
   } catch (err) {
     res.status(500).json({
       status: 'error',
-      message: err.message
+      message: err.message,
     });
   }
 };

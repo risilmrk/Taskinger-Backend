@@ -4,18 +4,15 @@ const apiFeature = require('../utils/apiFeature');
 
 exports.getAllTasks = async (req, res) => {
   try {
-   const features = new apiFeature(Task.find(), req.query)
-  .filter()
-  .sort()
-  .pendingTasks();
+    const features = new apiFeature(Task.find(), req.query).filter().sort();
 
-const tasks = await features.query;
+    const tasks = await features.query;
 
     res.status(200).json({
       status: 'success',
       results: tasks.length,
       data: {
-        tasks
+        tasks,
       },
     });
   } catch (err) {
@@ -48,8 +45,6 @@ exports.getTask = async (req, res) => {
     });
   }
 };
-
-
 
 exports.addTask = async (req, res) => {
   try {
@@ -137,7 +132,6 @@ exports.toggleStarted = async (req, res) => {
       status: 'success',
       task,
     });
-
   } catch (err) {
     res.status(500).json({
       status: 'fail',
@@ -146,35 +140,30 @@ exports.toggleStarted = async (req, res) => {
   }
 };
 
-
-
-exports.toggleFinished = async (req,res)=>{
+exports.toggleFinished = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
-    if(!task){
+    if (!task) {
       return res.status(404).json({
         status: 'fail',
         message: 'Task not found',
       });
     }
 
-    task.finished = !task.finished
+    task.finished = !task.finished;
 
-        await task.save();
+    await task.save();
     res.status(200).json({
-      status:'succcess',
-      task
-    })
-
-   
+      status: 'succcess',
+      task,
+    });
   } catch (err) {
     res.status(404).json({
       status: 'fail',
       message: err,
     });
   }
-}
-
+};
 
 exports.deleteTask = async (req, res) => {
   try {

@@ -9,5 +9,6 @@ router
 
 router
   .route('/:id')
-  .patch(projectController.upateProject)
+  .get(projectController.getProject)
+  .patch(projectController.updateProject)
 module.exports = router;
