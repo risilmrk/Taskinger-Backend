@@ -26,10 +26,4 @@ module.exports = class apiFeature {
     return this
   }
 
-pendingTasks() {
-    if (this.queryString.pending === 'true') {
-        this.query = this.query.find({ started: true, finished: false });
-    }
-    return this;
-}
 }

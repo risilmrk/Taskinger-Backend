@@ -194,7 +194,7 @@ exports.toggleFinished = async (req,res)=>{
 
 exports.getAllPending = async (req, res) => {
   try {
-    const tasks = await Task.find({ finished: false, started: true });
+    const tasks = await Task.find({ status:'pending' });
 
     res.status(200).json({
       status: 'success',
