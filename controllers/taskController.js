@@ -1,15 +1,21 @@
 const Task = require('../models/taskModel');
 const Project = require('../models/projectModel');
+const apiFeature = require('../utils/apiFeature');
 
 exports.getAllTasks = async (req, res) => {
   try {
-    const tasks = await Task.find();
+   const features = new apiFeature(Task.find(), req.query)
+  .filter()
+  .sort()
+  .pendingTasks();
+
+const tasks = await features.query;
 
     res.status(200).json({
       status: 'success',
       results: tasks.length,
       data: {
-        tasks,
+        tasks
       },
     });
   } catch (err) {
