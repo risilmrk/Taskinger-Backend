@@ -8,6 +8,7 @@ exports.getAllTasks = async (req, res) => {
     .filter()
     .sort()
     .limitFields()
+    .paginate()
 
     const tasks = await features.query;
 

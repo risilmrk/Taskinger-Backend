@@ -17,8 +17,8 @@ const taskSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['Independent', 'Project'],
-    default: 'Independent',
+    enum: ['none', 'Project'],
+    default: 'none',
   },
   project: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,7 +35,7 @@ const taskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'not started', 'completed'],
+    enum: ['pending', 'notStarted', 'completed'],
     default: 'pending',
   },
   createdAt: {
