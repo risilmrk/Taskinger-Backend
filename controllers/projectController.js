@@ -17,7 +17,26 @@ exports.getAllProjects = async (req, res) => {
     });
   }
 };
-
+exports.getProject = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Project not found',
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      project,
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: err.message,
+    });
+  }
+};
 exports.addProject = async (req, res) => {
   try {
     const newProject = await Project.create(req.body);
