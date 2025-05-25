@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Project = require('./projectModel');
 
 const taskSchema = new mongoose.Schema({
   title: {
@@ -35,8 +36,8 @@ const taskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'notStarted', 'completed'],
-    default: 'pending',
+    enum: ['in-progress', 'not-started', 'completed'],
+    default: 'not-started',
   },
   createdAt: {
     type: Date,
@@ -56,14 +57,16 @@ taskSchema.pre('remove', async function (next) {
 
 taskSchema.pre('save', function (next) {
   if (!this.finished && this.started) {
-    this.status = 'pending';
+    this.status = 'in-progress';
   } else if (!this.finished && !this.started) {
-    this.status = 'not started';
+    this.status = 'not-started';
   } else if(this.finished) {
     this.status = 'completed';
   }
   next();
 });
+
+
 
 
 

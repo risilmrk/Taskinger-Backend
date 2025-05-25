@@ -1,6 +1,7 @@
 const Task = require('../models/taskModel');
 const Project = require('../models/projectModel');
 const apiFeature = require('../utils/apiFeature');
+const {updateProjectType} = require('../utils/projectUtils')
 
 exports.getAllTasks = async (req, res) => {
   try {
@@ -66,7 +67,7 @@ exports.addTask = async (req, res) => {
     }
 
     // Set type based on project
-    const type = project ? 'Project' : 'Independent';
+    const type = project ? 'Project' : 'none';
 
     // Create and save task
     const newTask = await Task.create({
@@ -131,6 +132,8 @@ exports.toggleStarted = async (req, res) => {
 
     // Save the task to apply changes and trigger pre-save hook
     await task.save();
+
+    await updateProjectType(task.project)
 
     res.status(200).json({
       status: 'success',

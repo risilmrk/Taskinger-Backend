@@ -1,20 +1,24 @@
 const  mongoose  = require("mongoose")
 
-const projectSchema = new mongoose.Schema ({
-    title:{
-        type:String,
-        unique:true,
-        maxlength: [20, 'A description must have less or equal than 20 characters'],
+const projectSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        unique: true,
+        maxlength: [20, 'A title must have less or equal than 20 characters'],
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
         maxlength: [40, 'A description must have less or equal than 40 characters'],
     },
-    tasks:[{
+    status: {
+        type: String,
+        enum: ['in-progress', 'not-started', 'completed'],
+    },
+    tasks: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'Task'
     }],
-    deadLine:{
-        type:Date
+    deadLine: {
+        type: Date
     }
 })
 
