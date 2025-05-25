@@ -12,7 +12,10 @@ const projectSchema = new mongoose.Schema ({
     },
     tasks:[{
         type: mongoose.Schema.Types.ObjectId, ref: 'Task'
-    }]
+    }],
+    deadLine:{
+        type:Date
+    }
 })
 
 const Project = mongoose.model('Project',projectSchema)

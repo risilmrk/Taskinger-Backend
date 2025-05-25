@@ -4,7 +4,10 @@ const apiFeature = require('../utils/apiFeature');
 
 exports.getAllTasks = async (req, res) => {
   try {
-    const features = new apiFeature(Task.find(), req.query).filter().sort();
+    const features = new apiFeature(Task.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
 
     const tasks = await features.query;
 
