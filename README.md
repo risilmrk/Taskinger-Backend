@@ -48,6 +48,41 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 - [@risilmrk](https://github.com/risilmrk) - Creator & Backend Developer
 
 ---
+# API Routes
+
+📝 **Frontend Developer Note:** Task & Project API Endpoints
+
+---
+
+## 📌 Base URLs:
+
+- **URL:** `https://taskinger-backend.onrender.com`
+- **Tasks:** `/api/v1/tasks`  
+- **Projects:** `/api/v1/projects`
+
+---
+
+## ✅ Task Routes Overview
+
+- `GET /api/v1/tasks` – Fetch all tasks (supports query like `?pending=true`)
+- `POST /api/v1/tasks` – Add a new task
+- `GET /api/v1/tasks/:id` – Get single task by ID
+- `PATCH /api/v1/tasks/:id` – Update a task
+- `DELETE /api/v1/tasks/:id` – Delete a task
+- `PATCH /api/v1/tasks/:id/toggle-started` – Toggle task started status
+- `PATCH /api/v1/tasks/:id/toggle-finished` – Toggle task finished status
+
+🟡 **To get only pending tasks, use:**  
+`GET /api/v1/tasks?pending=true`
+
+---
+
+## ✅ Project Routes Overview
+
+- `GET /api/v1/projects` – Get all projects
+- `POST /api/v1/projects` – Create a new project
+
+  ---
 
 ## 📄 License
 
