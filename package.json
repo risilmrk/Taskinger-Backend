@@ -1,7 +1,7 @@
 {
   "name": "taskinger",
   "version": "1.0.0",
-  "description": "",
+  "description": "Taskinger is a modern, developer-friendly task management platform designed to streamline personal and team productivity. Whether you're a solo dev, a startup, or a large team, Taskinger provides intuitive tools to help you manage tasks, deadlines, and collaboration with ease.",
   "main": "server.js",
   "scripts": {
     "start": "node index.js",
@@ -20,5 +20,14 @@
     "mongodb": "^6.16.0",
     "mongoose": "^8.15.0",
     "morgan": "^1.10.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/risilmrk/Taskinger-Backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/risilmrk/Taskinger-Backend/issues"
+  },
+  "homepage": "https://github.com/risilmrk/Taskinger-Backend#readme"
 }
